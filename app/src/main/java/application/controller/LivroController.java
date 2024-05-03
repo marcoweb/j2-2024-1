@@ -66,4 +66,21 @@ public class LivroController {
 
         return "redirect:/livros/list";
     }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(@RequestParam("id") long id,
+        @RequestParam("titulo") String titulo,
+        @RequestParam("genero") String genero) {
+
+        Optional<Livro> resultado = livroRepo.findById(id);
+
+        if(resultado.isPresent()) {
+            resultado.get().setTitulo(titulo);
+            resultado.get().setGenero(genero);
+
+            livroRepo.save(resultado.get());
+        }
+
+        return "redirect:/livros/list";
+    }
 }
