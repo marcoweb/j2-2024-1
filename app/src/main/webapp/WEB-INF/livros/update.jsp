@@ -8,7 +8,7 @@
     </head>
     <body>
         <h1>Editar Livros</h1>
-        <form action='/livros/insert' method='post'>
+        <form action='/livros/update' method='post'>
             <input type="hidden" name="id" value="${livro.getId()}">
             <div>
                 <label>Título</label>
