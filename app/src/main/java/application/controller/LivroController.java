@@ -48,7 +48,7 @@ public class LivroController {
         
         Livro livro = new Livro();
         livro.setTitulo(titulo);
-        livro.setGenero(genero);
+        //livro.setGenero(genero);
 
         livroRepo.save(livro);
         
@@ -76,7 +76,7 @@ public class LivroController {
 
         if(resultado.isPresent()) {
             resultado.get().setTitulo(titulo);
-            resultado.get().setGenero(genero);
+            //resultado.get().setGenero(genero);
 
             livroRepo.save(resultado.get());
         }
