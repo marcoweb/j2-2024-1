@@ -1,5 +1,7 @@
 package application.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,16 @@ public class GeneroController {
         genero.setNome(nome);
         
         generoRepo.save(genero);
+        return "redirect:/generos/list";
+    }
+
+    @RequestMapping("/update")
+    public String update(@RequestParam("id") long id, Model ui) {
+        Optional<Genero> result = generoRepo.findById(id);
+        if(result.isPresent()) {
+            ui.addAttribute("genero", result.get());
+            return "/generos/update";
+        }
         return "redirect:/generos/list";
     }
 }
