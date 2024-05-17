@@ -71,6 +71,8 @@ public class LivroController {
 
         if(resultado.isPresent()) {
             ui.addAttribute("livro", resultado.get());
+
+            ui.addAttribute("generos", generoRepo.findAll());
             return "/livros/update";    
         }
 
@@ -80,15 +82,18 @@ public class LivroController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(@RequestParam("id") long id,
         @RequestParam("titulo") String titulo,
-        @RequestParam("genero") String genero) {
+        @RequestParam("genero") long genero) {
 
         Optional<Livro> resultado = livroRepo.findById(id);
 
         if(resultado.isPresent()) {
-            resultado.get().setTitulo(titulo);
-            //resultado.get().setGenero(genero);
+            Optional<Genero> resultGenero = generoRepo.findById(genero);
+            if(resultGenero.isPresent()){
+                resultado.get().setTitulo(titulo);
+                resultado.get().setGenero(resultGenero.get());
 
-            livroRepo.save(resultado.get());
+                livroRepo.save(resultado.get());
+            }
         }
 
         return "redirect:/livros/list";

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -15,7 +16,11 @@
             </div>
             <div>
                 <label>Gênero</label>
-                <input type="text" name="genero" value="${livro.getGenero()}" />
+                <select name="genero">
+                    <c:forEach var="g" items="${generos}">
+                        <option ${livro.genero.id == g.id ? "selected" : ""} value="${g.id}">${g.nome}</option>
+                    </c:forEach>
+                </select>
             </div>
             <button type="submit">Salvar</button>
         </form>
