@@ -1,5 +1,6 @@
 package application.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -29,7 +30,7 @@ public class Livro {
         name = "livros_possuem_autores",
         joinColumns = @JoinColumn(name="livro_id"),
         inverseJoinColumns = @JoinColumn(name="autor_id"))
-    private Set<Autor> autores;
+    private Set<Autor> autores = new HashSet<Autor>();
 
     public long getId() {
         return id;
