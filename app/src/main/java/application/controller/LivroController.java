@@ -1,5 +1,6 @@
 package application.controller;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,7 @@ public class LivroController {
             ui.addAttribute("livro", resultado.get());
 
             ui.addAttribute("generos", generoRepo.findAll());
+            ui.addAttribute("autores", autorRepo.findAll());
             return "/livros/update";    
         }
 
@@ -95,7 +97,8 @@ public class LivroController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(@RequestParam("id") long id,
         @RequestParam("titulo") String titulo,
-        @RequestParam("genero") long genero) {
+        @RequestParam("genero") long genero,
+        @RequestParam("autores") long[] autores) {
 
         Optional<Livro> resultado = livroRepo.findById(id);
 
@@ -104,6 +107,13 @@ public class LivroController {
             if(resultGenero.isPresent()){
                 resultado.get().setTitulo(titulo);
                 resultado.get().setGenero(resultGenero.get());
+                resultado.get().setAutores(new HashSet<Autor>());
+                for(long a : autores) {
+                    Optional<Autor> result = autorRepo.findById(a);
+                    if(result.isPresent()) {
+                        resultado.get().getAutores().add(result.get());
+                    }
+                }
 
                 livroRepo.save(resultado.get());
             }
